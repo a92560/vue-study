@@ -49,14 +49,14 @@ export function initMixin (Vue: Class<Component>) {
     }
     // expose real self
     vm._self = vm
-    initLifecycle(vm)
-    initEvents(vm)
-    initRender(vm)
-    callHook(vm, 'beforeCreate')
-    initInjections(vm) // resolve injections before data/props
-    initState(vm)
-    initProvide(vm) // resolve provide after data/props
-    callHook(vm, 'created')
+    initLifecycle(vm) // 处理生命周期 $parent $children $watchers $refs 等
+    initEvents(vm) // 处理父子事件相关的
+    initRender(vm) // 处理 $createElement
+    callHook(vm, 'beforeCreate') // 调用hook beforeCreate
+    initInjections(vm) // resolve injections before data/props // 处理 injections
+    initState(vm) // 处理 props methods watch computed data
+    initProvide(vm) // resolve provide after data/props // 处理provide vm._provide = provide
+    callHook(vm, 'created') // 调用hook created
 
     /* istanbul ignore if */
     if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
@@ -66,6 +66,7 @@ export function initMixin (Vue: Class<Component>) {
     }
 
     if (vm.$options.el) {
+      // 执行$mount函数 定义位置：src/platforms/web/runtime/index.js
       vm.$mount(vm.$options.el)
     }
   }

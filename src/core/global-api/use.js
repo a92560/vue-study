@@ -3,6 +3,7 @@
 import { toArray } from '../util/index'
 
 export function initUse (Vue: GlobalAPI) {
+  // Vue.use() 插件安装
   Vue.use = function (plugin: Function | Object) {
     const installedPlugins = (this._installedPlugins || (this._installedPlugins = []))
     if (installedPlugins.indexOf(plugin) > -1) {

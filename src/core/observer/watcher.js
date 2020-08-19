@@ -67,6 +67,7 @@ export default class Watcher {
     this.cb = cb
     this.id = ++uid // uid for batching
     this.active = true
+    // computed watcher sign
     this.dirty = this.lazy // for lazy watchers
     this.deps = []
     this.newDeps = []
@@ -90,6 +91,9 @@ export default class Watcher {
         )
       }
     }
+    // lazy is a sign that this watcher is a computed watcher. did not get its value first;
+    // when to get its value
+    // we get its value when we compile the template
     this.value = this.lazy
       ? undefined
       : this.get()
@@ -99,6 +103,14 @@ export default class Watcher {
    * Evaluate the getter, and re-collect dependencies.
    */
   get () {
+    /*
+    * how computed watcher get its dep
+    * when we try to get computed's value. we execute computed get method.
+    * when we try wo get values from options.data
+    * so we get to Object.defineProperty. and the watcher is our computed watcher
+    * so the dep was track
+    * dep: {id: 1, key: firstName, subs: [watcher(computed watcher/user watcher/render watcher): { id: 1, dep: {key: firstName, id: 1}}]}
+    * */
     pushTarget(this)
     let value
     const vm = this.vm

@@ -5008,6 +5008,7 @@
         measure(("vue " + (vm._name) + " init"), startTag, endTag);
       }
 
+      debugger;
       if (vm.$options.el) {
         vm.$mount(vm.$options.el);
       }
@@ -9040,6 +9041,7 @@
     el,
     hydrating
   ) {
+    debugger;
     el = el && inBrowser ? query(el) : undefined;
     return mountComponent(this, el, hydrating)
   };
@@ -11097,6 +11099,7 @@
   }
 
   function genData$2 (el, state) {
+    debugger;
     var data = '{';
 
     // directives first.
@@ -11838,6 +11841,7 @@
     if (options.optimize !== false) {
       optimize(ast, options);
     }
+    debugger;
     var code = generate(ast, options);
     return {
       ast: ast,
@@ -11879,6 +11883,7 @@
     el,
     hydrating
   ) {
+    debugger;
     el = el && query(el);
 
     /* istanbul ignore if */

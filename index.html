@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <div id="app"></div>
+</body>
+<!--<script src="./dist/vue.js"></script>-->
+<script src="./dist/vue.js"></script>
+<script>
+  const app = new Vue({
+    template: '<div>{{name}}</div>',
+    // el: '#root',
+    data: {
+      name: 'Darren',
+      age: 12,
+      firstName: 'Darren',
+      lastName: 'Baron',
+      useless: 0,
+    },
+    computed: {
+      // fullName() {
+      //   // if (this.useless > 0) {
+      //   return `${this.firstName}_${this.lastName}`;
+      //   // }
+      //   // return 'please click change';
+      // }
+    },
+    methods: {
+      change() {
+        this.useless++;
+      },
+      changeLast() {
+        this.lastName = 'anqi';
+      }
+    },
+    mounted() {
+      // setTimeout(() => {
+      //   /*
+      //   * 巨坑
+      //   * 根本就没有人监听它的改变
+      //   * 收集依赖的时候，模板没有使用
+      //   * dep: {id: 1, subs: []} subs为空
+      //   * */
+      //   this.firstName = 'come on';
+      //   // this.firstName = 'come on1';
+      //   // this.firstName = 'come on2';
+      //   // this.firstName = 'come on3';
+      //   // console.log(this.fullName);
+      // }, 8000)
+    },
+    watch: {
+      lastName (newVal, oldVal) {
+        console.log(newVal, oldVal, 111);
+      },
+    }
+  }).$mount('#app');
+</script>
+</html>

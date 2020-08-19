@@ -303,6 +303,8 @@ export function genData (el: ASTElement, state: CodegenState): string {
   if (el.wrapListeners) {
     data = el.wrapListeners(data)
   }
+
+  debugger;
   return data
 }
 

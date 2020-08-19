@@ -93,16 +93,16 @@ describe('Directive v-bind', () => {
 
   it('boolean attr', done => {
     const vm = new Vue({
-      template: '<div><span :disabled="foo">hello</span></div>',
-      data: { foo: true }
+      template: `<div><span :disabled="foo.auth_status.includes('DOWNLOAD')">hello</span></div>`,
+      data: { foo: { auth_status: []} }
     }).$mount()
-    expect(vm.$el.firstChild.getAttribute('disabled')).toBe('disabled')
-    vm.foo = 'again'
+    expect(vm.$el.firstChild.getAttribute('disabled')).toBe(null)
+    vm.foo.auth_status = ['DOWNLOAD', 'EXE']
     waitForUpdate(() => {
       expect(vm.$el.firstChild.getAttribute('disabled')).toBe('disabled')
       vm.foo = null
     }).then(() => {
-      expect(vm.$el.firstChild.hasAttribute('disabled')).toBe(false)
+      expect(vm.$el.firstChild.hasAttribute('disabled')).toBe(true)
       vm.foo = ''
     }).then(() => {
       expect(vm.$el.firstChild.hasAttribute('disabled')).toBe(true)

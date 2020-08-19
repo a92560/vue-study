@@ -162,6 +162,7 @@ function callActivatedHooks (queue) {
  * pushed when the queue is being flushed.
  */
 export function queueWatcher (watcher: Watcher) {
+  // 去重 目的是为了执行一次watcher.update();
   const id = watcher.id
   if (has[id] == null) {
     has[id] = true

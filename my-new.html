@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  // function myNew(Ctor) {
+  //   debugger;
+  //   if (typeof Ctor !== 'function') {
+  //     throw new Error("参数必须为参数")
+  //   }
+  //   myNew.target = Ctor;
+  //   var newObj = Object.create(Ctor.prototype)
+  //   var args = [].slice.call(arguments, 1)
+  //   var ctorResult = Ctor.apply(newObj, args)
+  //   var isObject = typeof ctorResult === 'object' && typeof ctorResult !== null
+  //   var isFunction = typeof ctorResult === 'function'
+  //   if (isObject || isFunction) {
+  //     return ctorResult
+  //   }
+  //   return newObj
+  // }
+  // 第二版的代码
+  // function objectFactory() {
+  //
+  //   var obj = new Object(),
+  //
+  //   Constructor = [].shift.call(arguments);
+  //
+  //   obj.__proto__ = Constructor.prototype;
+  //
+  //   var ret = Constructor.apply(obj, arguments);
+  //
+  //   return typeof ret === 'object' ? ret : obj;
+  //
+  // };
+
+
+
+  function Person(name, age) {
+    this.name = name;
+    this.age = age;
+    return {
+      gender: 'male',
+      money: '0'
+    }
+  }
+
+  // const person = myNew(Person, 'Darren', '18')
+  // console.log(person)
+</script>
+</body>
+</html>

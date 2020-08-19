@@ -55,6 +55,7 @@ export function initState (vm: Component) {
   } else {
     observe(vm._data = {}, true /* asRootData */)
   }
+  debugger;
   if (opts.computed) initComputed(vm, opts.computed)
   if (opts.watch && opts.watch !== nativeWatch) {
     initWatch(vm, opts.watch)
@@ -173,6 +174,10 @@ function initComputed (vm: Component, computed: Object) {
   const isSSR = isServerRendering()
 
   for (const key in computed) {
+    /*
+    * fullName() {}
+    * fullName: {set() {}, get() {}}
+    * */
     const userDef = computed[key]
     const getter = typeof userDef === 'function' ? userDef : userDef.get
     if (process.env.NODE_ENV !== 'production' && getter == null) {
@@ -186,15 +191,16 @@ function initComputed (vm: Component, computed: Object) {
       // create internal watcher for the computed property.
       watchers[key] = new Watcher(
         vm,
-        getter || noop,
-        noop,
-        computedWatcherOptions
+        getter || noop, // fullName这个函数 或者fullName: { get() {}}的get函数
+        noop, // 回调函数
+        computedWatcherOptions // { lazy: true }
       )
     }
 
     // component-defined computed properties are already defined on the
     // component prototype. We only need to define computed properties defined
     // at instantiation here.
+    // 处理computed的key和props/data中的key冲突
     if (!(key in vm)) {
       defineComputed(vm, key, userDef)
     } else if (process.env.NODE_ENV !== 'production') {
@@ -206,14 +212,31 @@ function initComputed (vm: Component, computed: Object) {
     }
   }
 }
-
+/*
+* computed: {
+*
+*   fullName() {
+*     return this.firstName + this.lastName;
+*   },
+*   arr: {
+*     set(newVal) {
+*       this.arr1 = newVal;
+*     },
+*     get() {
+*       return this.arr;
+*     }
+*   }
+* }
+* */
 export function defineComputed (
   target: any,
   key: string,
   userDef: Object | Function
 ) {
   const shouldCache = !isServerRendering()
+  // fullName() {}
   if (typeof userDef === 'function') {
+    // 为 Object.defineProperty 做铺垫
     sharedPropertyDefinition.get = shouldCache
       ? createComputedGetter(key)
       : createGetterInvoker(userDef)
@@ -239,12 +262,23 @@ export function defineComputed (
 }
 
 function createComputedGetter (key) {
+  /*
+  * computedGetter 为fullName的get函数 即 Object.defineProperty的get函数
+  * */
   return function computedGetter () {
+    /*
+    * when we try to get computed value in our template or vue methods
+    * we collect dependency and the watcher is component render watcher
+    *
+    * */
     const watcher = this._computedWatchers && this._computedWatchers[key]
     if (watcher) {
+      // when we get the values we try to make the watcher's dirty false
       if (watcher.dirty) {
         watcher.evaluate()
       }
+      // we didn't execute watcher's get method, it means we didn't push now component watcher to the targetStack
+      // so Dep.target is undefined
       if (Dep.target) {
         watcher.depend()
       }

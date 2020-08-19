@@ -40,3 +40,4 @@ Vue.prototype.$mount = function (
 }
 
 export default Vue
+
