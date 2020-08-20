@@ -3,35 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+      #traffic-light {
+        width: 100px;
+        height: 100px;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+      }
+    </style>
 </head>
 <body>
+  <div id="traffic-light"></div>
 <script>
-  const log = console.log;
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  // const log = console.log;
+  // const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  //
+  // const subFlow = createFlow([() => delay(1000).then(() => log("c"))]);
+  //
+  // createFlow([
+  //   () => log("a"),
+  //   () => log("b"),
+  //   subFlow,
+  //   [() => delay(1000).then(() => log("d")), () => log("e")],
+  // ]).run(() => {
+  //   console.log("done");
+  // });
+  //
+  // function createFlow(list = []) {
+  //   return {
+  //     list: [...list].flat(Infinity),
+  //     async run(cb = () => {}) {
+  //       for (let i = 0; i < this.list.length; i ++) {
+  //         const it = this.list[i];
+  //         typeof it === 'function' ? await it() : await it.run();
+  //       }
+  //       cb();
+  //     },
+  //   }
+  // }
+  //
+  // function sleep(duration) {
+  //   return new Promise((resolve) => {
+  //     setTimeout(resolve, duration);
+  //   })
+  // }
+  // async function changeColor(duration, color) {
+  //   document.getElementById('traffic-light').style.backgroundColor = color;
+  //   await sleep(duration)
+  // }
+  //
+  // async function main() {
+  //   while(true) {
+  //     await changeColor(3000, 'green');
+  //     await changeColor(1000, 'yellow');
+  //     await changeColor(2000, 'red');
+  //   }
+  // }
+  // main();
 
-  const subFlow = createFlow([() => delay(1000).then(() => log("c"))]);
+  // const showThis = () => {
+  //   console.log(this);
+  // }
+  // function showThis() {
+  //   console.log(this);
+  // }
+  //
+  // const o = {
+  //   showThis,
+  // }
+  //
+  // o.showThis();
+  // showThis();
 
-  createFlow([
-    () => log("a"),
-    () => log("b"),
-    subFlow,
-    [() => delay(1000).then(() => log("d")), () => log("e")],
-  ]).run(() => {
-    console.log("done");
-  });
+  // class 按照 'use strict'来执行
+  // class C{
+  //   showThis() {
+  //     console.log(this);
+  //   }
+  // }
+  // const c = new C;
+  // const showThis = c.showThis.bind(window);
+  // showThis();
+  // c.showThis();
 
-  function createFlow(list = []) {
+  // fn.length -> 3
+  // 分析第一个log
+  // 第一次执行 fn.length -> 3 args: [1]
+  // 返回结果为 (...arguments) => currying(fn, ...args, ...arguments) arguments: 2
+  // 第二次执行 fn.length -> 3 args: [1, 2]
+  // 返回结果为 (...arguments) => currying(fn, ...args, ...arguments) arguments: 3
+  // 第三次执行 fn.length -> 3 args: [1, 2, 3]
+  // 返回结果为 addSum(1, 2, 3)
+  //
+  // let currying = (fn, ...args) =>
+  //   fn.length > args.length ?
+  //     (...arguments) => currying(fn, ...args, ...arguments) :
+  //     fn(...args)
+  // const currying = (fn, ...args) =>
+  //   fn.length > args.length ?
+  //     (...arguments) => currying(fn, ...args, ...arguments) :
+  //     fn(...args);
+  // let addSum = (a, b, c) => a+b+c
+  // let add = currying(addSum)
+  // console.log(add(1)(2)(3))
+  // console.log(add(1, 2)(3))
+  // console.log(add(1,2,3))
+  //
+  // let unique_1 = arr => [...new Set(arr)];
+
+  // function myCall(ctx, ...args) {
+  //   ctx = ctx == undefined ? window : ctx;
+  //   const type = typeof ctx;
+  //   const isObject = /^(function|object)$/.test(type);
+  //   const isSymbol = /^(symbol|bigint)$/.test(type);
+  //   if (!isObject) {
+  //     if (isSymbol) {
+  //       ctx = Object(ctx);
+  //     } else {
+  //       ctx = new Object.getPrototypeOf(ctx).constructor(ctx);
+  //     }
+  //   }
+  //   const key = Symbol('key');
+  //   ctx[key] = this;
+  //   const ret = ctx[key](...args);
+  //   delete ctx[key];
+  //   return ret;
+  // }
+  //
+  // Function.prototype.myCall = myCall;
+  //
+  // const obj = {
+  //   o: 1,
+  // };
+  // const obj1 = {
+  //   o: 2,
+  // };
+  // function test(name) {
+  //   console.log(this.o);
+  //   console.log(name);
+  // }
+  // // test.myCall(obj, 'Darren');
+  // // savedTest()
+  //
+  // function myBind(ctx, ...args) {
+  //   ctx = ctx == undefined ? window : ctx;
+  //   const type = typeof ctx;
+  //   const isObject = /^(function|object)$/.test(type);
+  //   const isSymbol = /^(symbol|bigint)$/.test(type);
+  //   if (!isObject) {
+  //     if (isSymbol) {
+  //       ctx = Object(ctx);
+  //     } else {
+  //       ctx = new Object.getPrototypeOf(ctx).constructor(ctx);
+  //     }
+  //   }
+  //   return (...innerArgs) => {
+  //     console.log(ctx);
+  //     this.apply(ctx, [...args, ...innerArgs]);
+  //   }
+  // }
+  //
+  // Function.prototype.myBind = myBind;
+  // const bindTest = test.myBind(obj);
+  // bindTest.myBind(obj1);
+  // bindTest('Darren Yes');
+
+  // 实现new
+  // 1. 创建一个新对象，这个对象的__proto__ 执行构造函数的原型对象
+  // 2. 执行构造函数
+  // 3. 如果执行构造函数的返回值是引用类型， 否则返回新对象
+  function myNew(Ctor, ...args) {
+    const obj = Object.create(Ctor.prototype);
+    const ret = Ctor.apply(obj, args);
+    const isObject = /^(function|object)$/.test(typeof ret);
+    if (ret !== null && isObject) {
+      return ret;
+    }
+    return obj;
+  }
+
+  function Person(name, age) {
+    this.name = name;
+    this.age = age;
     return {
-      list: [...list].flat(Infinity),
-      async run(cb = () => {}) {
-        for (let i = 0; i < this.list.length; i ++) {
-          const it = this.list[i];
-          typeof it === 'function' ? await it() : await it.run();
-        }
-        cb();
-      },
+      a: 1,
+      b: 2,
     }
   }
+
+  // const person = myNew(Person, 'Darren', 26);
+  // console.log(person);
+
+  const str = myNew(String, 1);
+  console.log(str);
+  // function myInstanceOf(left, right) {
+  //   if (left === null) {
+  //     return false;
+  //   }
+  //   if (typeof left !== 'object') {
+  //     return false;
+  //   }
+  //   const rightPrototype = right.prototype;
+  //   let leftPrototype = Object.getPrototypeOf(left);
+  //   while(leftPrototype) {
+  //     if (leftPrototype === rightPrototype) {
+  //       return true
+  //     }
+  //     if (leftPrototype == undefined) {
+  //       return false
+  //     }
+  //     leftPrototype = Object.getPrototypeOf(leftPrototype);
+  //   }
+  //   return false;
+  // }
+  //
+  // class A{}
+  // class B extends A{}
+  // const b = new B()
+  // console.log(myInstanceOf(b, A))
+  // console.log(myInstanceOf(b, B))
+  // console.log(myInstanceOf(Object, Function))
+  // console.log(Object instanceof Function)
+  function myIndex(func) {
+    if (!Array.isArray(this)) {
+      throw new Error('调用者必须为数组');
+    }
+    const arrLen = this.length;
+    let idx = -1;
+    for (let i = 0; i < arrLen; i ++) {
+      const ret = func.call(this, this[i], i);
+      if (ret) {
+        idx = i;
+        return idx;
+      }
+    }
+    return -1;
+  }
+
+  Array.prototype.myIndex = myIndex;
+  const arr = [1, 2, 3];
+  const idx = arr.myIndex((item, i) => {
+    return item === 2;
+  })
+  console.log(idx);
 </script>
 </body>
 </html>
