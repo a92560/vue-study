@@ -7,18 +7,94 @@
 <body>
 
 <script>
-  let x = 100;
-  let y = 200;
-  let funcA = function(x) {
-    x += 1;
-    let funcB = function() {
-      console.log(x);
-      console.log(y);
-    }
-    return funcB;
-  }
-  let f = funcA(101)();
+  // let x = 100;
+  // let y = 200;
+  // let funcA = function() {
+  //   // x += 1;
+  //   let funcB = function() {
+  //     // debugger;
+  //     // this -> window()
+  //     // scope chain: funcB funcA
+  //     console.log(x);
+  //     console.log(y);
+  //   }
+  //   return funcB;
+  // }
+  // let f = funcA(101);
   // f();
+
+  // function Subject() {
+  //   this.observers = [];
+  // }
+  //
+  // Subject.prototype.add = function(observer) {
+  //   this.observers.push(observer);
+  //   return this.observers.length - 1;
+  // }
+  //
+  // Subject.prototype.del = function(name) {
+  //   const idx = this.observers.findIndex(observer => observer.name === name);
+  //   if (idx > -1) {
+  //     this.observers.splice(idx, 1);
+  //   }
+  // }
+  //
+  // Subject.prototype.notify = function() {
+  //   this.observers.forEach(observer => {
+  //     observer.update.call(observer);
+  //   })
+  // }
+  //
+  // function Observer(name) {
+  //   this.name = name;
+  // }
+  //
+  // Observer.prototype.update = function() {
+  //   console.log(`${this.name}收到了`);
+  // }
+  //
+  // const ob1 = new Observer('ob1');
+  // const ob2 = new Observer('ob2');
+  // const subject = new Subject();
+  // subject.add(ob1);
+  // subject.add(ob2);
+  // subject.notify();
+  // subject.del(ob1.name);
+  // subject.notify();
+  // subject.del(ob2.name);
+  // subject.notify();
+
+  // function decToBin(num) {
+  //   const arr = [];
+  //   while (num > 0) {
+  //     arr.unshift(num % 2);
+  //     num = Math.floor(num / 2);
+  //   }
+  //   return arr.join('');
+  // }
+  // console.log(decToBin(100));
+  function add(a, b) {
+    return a + b;
+  }
+
+  add(1, 2);
+
+  const addCurry = curry(add);
+  console.log(addCurry(1)(2));
+  console.log(addCurry(1, 2));
+
+  function curry(fn, args) {
+    const len = fn.length;
+    args = args || [];
+    return function() {
+      let innerArgs = args.slice(0);
+      innerArgs = args.concat(...Array.from(arguments));
+      if (innerArgs.length < len) {
+        return curry.call(this, fn, innerArgs);
+      }
+      return fn.apply(this, innerArgs);
+    }
+  }
 </script>
 </body>
 </html>
