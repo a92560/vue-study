@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+      li {
+        float: left;
+        width: 100px;
+        height: 40px;
+        background-color: gold;
+      }
+      .clear {
+        clear: both;
+      }
+    </style>
+</head>
+<body>
+  <div>
+    <ul>
+      <li>HTML</li>
+      <li>CSS</li>
+      <li>JS</li>
+      <li>HTML5</li>
+      <li>OC</li>
+    </ul>
+    <div class="clear"></div>
+  </div>
+  <div>
+    <ul>
+      <li>swift</li>
+      <li>java</li>
+      <li>PHP</li>
+    </ul>
+  </div>
+</body>
+<script>
+  let testUrl="https://www.baidu.com/?key0=0&key1=1&key2=2";
+  function formatQuery(url) {
+    const obj = {};
+    if (!url) {
+      return obj;
+    }
+    const idx = url.lastIndexOf('?');
+    url = url.substring(idx + 1);
+    const keys = url.split('&');
+    keys.forEach(key => {
+      let [param, value] = key.split('=');
+      obj[param] = value;
+    })
+    return obj;
+  }
+  console.log(formatQuery(testUrl))
+
+</script>
+</html>
