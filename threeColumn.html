@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+      .wrapper {
+        height: 200px;
+      }
+      .left {
+        float: left;
+        width: 200px;
+        height: 200px;
+        background: yellow;
+      }
+      .right {
+        float: right;
+        width: 200px;
+        height: 200px;
+        background: #0000FF;
+      }
+      .center {
+        height: 200px;
+        background: red;
+      }
+    </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="left"></div>
+    <div class="right"></div>
+    <div class="center"></div>
+  </div>
+</body>
+<script>
+  /* 函数正常执行 this执行window */
+  var length = 10;
+  function fn() {
+    return this.length + 1;
+  }
+  var obj = {
+    length: 5,
+    test1: function() {
+      console.log(this);
+      console.log(this.length);
+      return fn(obj);
+    }
+  };
+  obj.test2=fn;
+  //下面代码输出是什么
+  console.log(obj.test1()) // 6
+  console.log(fn()===obj.test2()) // false
+
+  // function fn1() {
+  //   console.log(this);
+  //   return this.length + 1
+  // }
+  // function fn2() {
+  //   var length = 8;
+  //   let that = this;
+  //   const f = function () {
+  //     return fn1.call(obj);
+  //   }
+  //   return f()
+  // }
+  //
+  // var obj = {
+  //   length: 9,
+  // };
+  // console.log(fn1.call(obj))
+  //
+  // console.log(fn2())
+
+  console.log('begin')
+  setTimeout(() => {
+    console.log('setTimeout 1')
+    Promise.resolve().then(() => {
+      console.log('promise 1')
+      setTimeout(() => {
+        console.log('setTimeout2 between promise1&2')
+      })
+    }).then(() => {
+      console.log('promise 2')
+    })
+  }, 0)
+  console.log('end')
+  // begin end setTimeout1 promise1 promise2 setTimeout2 between promise1&2
+</script>
+</html>
