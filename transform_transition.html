@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    .margin-transition{
+      /* margin-left: 0; */
+      background: rgba(0,0,255,0.3);
+      transition: margin-left 1s;
+    }
+    .transform-transition{
+      /* transform: translate(0,0); */
+      background: rgba(0,255,0,0.3);
+      transition: transform 1s;
+    }
+    .common{
+      height: 300px;
+      width: 300px;
+    }
+  </style>
+</head>
+<body>
+<div class="margin-transition common" id="marginTransition">
+  <p>transition:margin-left 1s</p>
+</div>
+<div class="transform-transition common" id="transformTransition">
+  <p>transition:transform 1s</p>
+</div>
+<button id="control">见证奇迹</button>
+<script>
+  var btn = document.getElementById('control');
+  var marginTransition = document.getElementById('marginTransition');
+  var transformTransition = document.getElementById('transformTransition');
+  btn.addEventListener("click",function(){
+    console.log(marginTransition.style,transformTransition.style)
+    // marginTransition.style.marginLeft = "500px";
+    transformTransition.style.transform = "translate(500px,0)"
+  })
+</script>
+</body>
+</html>

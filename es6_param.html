@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  var x = 1;
+
+  function foo(x, y = function() { x = 2; }) {
+    var x = 3;
+    debugger;
+    y(); // `x` 被共用了吗？
+    console.log(x); // 没有，依然是 3，不是 2
+  }
+
+  foo();
+
+  // 并且外部的 `x` 也不受影响
+  console.log(x); // 1
+</script>
+</body>
+</html>
