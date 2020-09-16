@@ -11,11 +11,20 @@
   <iframe id="iframe" style="display: none" src="http://localhost:1002/postMessage2.html"></iframe>
 </body>
 <script>
+  // iframe.onload = function () {
+  //   if (iframe.contentWindow) {
+  //     console.log(iframe.contentWindow.postMessage);
+  //     iframe.contentWindow.postMessage('testIframe', '*');
+  //   }
+  // }
+  let count = 0;
   iframe.onload = function () {
-    if (iframe.contentWindow) {
-      console.log(iframe.contentWindow.postMessage);
-      iframe.contentWindow.postMessage('testIframe', '*');
+    if (count === 0) {
+      // iframe.src = 'http://localhost:1001/proxy.html';
+      count += 1;
+      return;
     }
+    console.log(iframe.contentWindow.name);
   }
 
 

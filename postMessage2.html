@@ -11,8 +11,10 @@
   postMessage2
 </body>
 <script>
-  window.onmessage = function(ev) {
-    console.log(ev);
-  }
+  // => 服务器端需要返回给A的属性都存储在 window.name
+  window.name = 'Darren';
+  // window.onmessage = function(ev) {
+  //   console.log(ev);
+  // }
 </script>
 </html>
