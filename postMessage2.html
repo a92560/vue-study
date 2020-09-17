@@ -12,9 +12,16 @@
 </body>
 <script>
   // => 服务器端需要返回给A的属性都存储在 window.name
-  window.name = 'Darren';
+  // window.name = 'Darren';
   // window.onmessage = function(ev) {
   //   console.log(ev);
   // }
+  // const bc = new BroadcastChannel('darren')
+  // bc.onmessage = function(e) {
+  //   console.log(e)
+  // }
+  window.addEventListener('storage', function (e) {
+    console.log(e);
+  })
 </script>
 </html>

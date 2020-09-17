@@ -6,15 +6,7 @@
 </head>
 <body>
   <div id="app">
-    <ul
-      v-for="(item, i) in obj.tableData"
-      :key="item.id"
-    >
-      <li @click="change1(item, i)">
-        {{ item.id }} - {{ item.name }} -
-        <div v-if="item.followers">{{ item.followers.join(' ') }}</div>
-      </li>
-    </ul>
+    {{ lastName }}
   </div>
 </body>
 <!--<script src="./dist/vue.js"></script>-->
@@ -27,7 +19,7 @@
       // name: 'Darren',
       // age: 12,
       // firstName: 'Darren',
-      // lastName: 'Baron',
+      lastName: '',
       // useless: 0,
       obj: {
         tableData: [],
@@ -37,7 +29,7 @@
     },
     methods: {
       change() {
-        this.useless++;
+        // this.useless++;
       },
       changeLast() {
         this.lastName = 'anqi';
@@ -57,12 +49,17 @@
           id: 2,
           name: 'Beacon2',
         },
-      ]
+      ];
+      // this.lastName = 'Baron';
     },
     watch: {
-      // lastName (newVal, oldVal) {
-      //   console.log(newVal, oldVal, 111);
-      // },
+      lastName: {
+        handler(newVal, oldVal) {
+          // debugger;
+          console.log(newVal, oldVal, 111);
+        },
+        immediate: true,
+      },
     }
   }).$mount('#app');
 </script>
