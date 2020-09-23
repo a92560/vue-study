@@ -3,17 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .outer {
+        position: absolute;
+        top: 100px;
+        left: 100px;
+        background: red;
+      }
+      .inner {
+        position: relative;
+        top: 200px;
+        left: 200px;
+        background: green;
+      }
+    </style>
 </head>
-<body>
+<body stlye="position: relative">
+  <div class="outer">
+    outer
+    <div class="inner">inner</div>
+  </div>
   <div id="app">
-    <ul
-      v-for="(item, i) in obj.tableData"
-      :key="item.id"
-    >
-      <li @click="change1(item, i)">
-        {{ item.id }} - {{ item.name }} -
-        <div v-if="item.followers">{{ item.followers.join(' ') }}</div>
+    <ul>
+      <li
+        v-for="(item, i) in obj.tableData"
+        :key="Math.random()"
+        @click="change1(item, i)"
+      >
+        <input type="checkbox" :value="item.checked" :checked="item.checked" @change="change2($event, i)">
+        {{ item.id }} - {{ item.name }} - {{ item.checked }}
       </li>
+      <button @click="myDelete">删除</button>
     </ul>
   </div>
 </body>
@@ -34,6 +58,9 @@
       }
     },
     computed: {
+      myKey() {
+        return ;
+      }
     },
     methods: {
       change() {
@@ -45,6 +72,17 @@
       change1(item, i) {
         item.followers = [`fellows${i}`, `manager${i}`];
         // this.$forceUpdate();
+      },
+      myDelete(i) {
+        this.obj.tableData.shift();
+        // this.$forceUpdate();
+      },
+      change2(e, i) {
+        // debugger;
+        // this.obj.tableData.splice(i, 1, {
+        //   ...this.obj.tableData[i],
+        //   checked: e.target.checked,
+        // })
       }
     },
     mounted() {
@@ -52,10 +90,17 @@
         {
           id: 1,
           name: 'Beacon1',
+          checked: false,
         },
         {
           id: 2,
           name: 'Beacon2',
+          checked: true,
+        },
+        {
+          id: 3,
+          name: 'Beacon3',
+          checked: true,
         },
       ]
     },
