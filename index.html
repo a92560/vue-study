@@ -51,7 +51,7 @@
       // name: 'Darren',
       // age: 12,
       // firstName: 'Darren',
-      // lastName: 'Baron',
+      lastName: '',
       // useless: 0,
       obj: {
         tableData: [],
@@ -64,7 +64,7 @@
     },
     methods: {
       change() {
-        this.useless++;
+        // this.useless++;
       },
       changeLast() {
         this.lastName = 'anqi';
@@ -102,12 +102,17 @@
           name: 'Beacon3',
           checked: true,
         },
-      ]
+      ];
+      // this.lastName = 'Baron';
     },
     watch: {
-      // lastName (newVal, oldVal) {
-      //   console.log(newVal, oldVal, 111);
-      // },
+      lastName: {
+        handler(newVal, oldVal) {
+          // debugger;
+          console.log(newVal, oldVal, 111);
+        },
+        immediate: true,
+      },
     }
   }).$mount('#app');
 </script>

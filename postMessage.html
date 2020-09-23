@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <!--<iframe id="iframe" style="display: none" src="http://localhost:1002/postMessage2.html"></iframe>-->
+</body>
+<script>
+  // iframe.onload = function () {
+  //   if (iframe.contentWindow) {
+  //     console.log(iframe.contentWindow.postMessage);
+  //     iframe.contentWindow.postMessage('testIframe', '*');
+  //   }
+  // }
+  // let count = 0;
+  // iframe.onload = function () {
+  //   if (count === 0) {
+  //     // iframe.src = 'http://localhost:1001/proxy.html';
+  //     count += 1;
+  //     return;
+  //   }
+  //   console.log(iframe.contentWindow.name);
+  // }
+  // const bc = new BroadcastChannel('darren')
+  // bc.postMessage('发送数据')
+  // localStorage.setItem('username2', 'darren3');
+
+  const ws = new WebSocket("ws://localhost:8000");
+  ws.onopen = function (event) {
+    // 或者把此方法注册到其他事件中，即可与其他服务器通信
+    ws.send({username : 'yiifaa', now : Date.now()}); // 通过服务器中转消息
+  };
+  ws.onmessage = function (event) {
+    // 消费消息
+    console.log(event.data);
+  }
+</script>
+</html>

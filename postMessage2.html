@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  postMessage2
+</body>
+<script>
+  // => 服务器端需要返回给A的属性都存储在 window.name
+  // window.name = 'Darren';
+  // window.onmessage = function(ev) {
+  //   console.log(ev);
+  // }
+  // const bc = new BroadcastChannel('darren')
+  // bc.onmessage = function(e) {
+  //   console.log(e)
+  // }
+  window.addEventListener('storage', function (e) {
+    console.log(e);
+  })
+</script>
+</html>

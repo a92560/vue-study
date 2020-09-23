@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  // window.onerror = function(message, source, lineno, colno, error) {
+  //   // 错误信息，源文件，行号
+  //   console.log(message + '\n' + source + '\n' + lineno);
+  //   // 禁止浏览器打印标准的错误信息
+  //   return true;
+  // }
+
+  // const xhr = new XMLHttpRequest();
+  // xhr.open('get', '/test');
+  // xhr.send();
+  // window.addEventListener('error', (e)=>{
+  //   console.log('addEventListener')
+  //   console.log(e)
+  // }, true);
+  //
+  // window.addEventListener("unhandledrejection", function(e) {
+  //   console.log('unhandledrejection')
+  //   console.log(e)
+  // }, true);
+  // console.log(a);
+
+  // const p1 = new Promise((resolve, reject) => {
+  //   resolve(1)
+  // })
+  // p1.then(res => {
+  //   console.log(res);
+  //   throw 1;
+  // }).then(res => {
+  //   console.log(res);
+  // })
+  //
+  // window.addEventListener('unhandledrejection', (e) => {
+  //   console.log(e);
+  // })
+
+  //
+  // function* F() {
+  //   throw new Error("gennerator-throw在函数体外抛出的错误")
+  //   yield 1;
+  //   return "gennerator-value";
+  // }
+  //
+  // const f = F();
+  //
+  // f.next();
+  window.addEventListener('error', (e)=>{
+    console.log('addEventListener')
+    console.log(e)
+  }, true);
+
+  window.addEventListener("unhandledrejection", function(e) {
+    console.log('unhandledrejection')
+    console.log(e)
+  }, true);
+
+  // 请求返回错误
+  fetch('http://example.com/movies.json')
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(myJson) {
+      console.log(myJson);
+    });
+  //
+  // // 无效请求
+  // fetch('http://example.com/404.json')
+  //   .then(function(response) {
+  //     return response.json();
+  //   })
+  //   .then(function(myJson) {
+  //     console.log(myJson);
+  //   });
+
+  // const xmlhttp = new XMLHttpRequest();
+  //
+  // xmlhttp.onreadystatechange=state_Change;
+  // xmlhttp.open("GET", 'http://127.0.0.1:8000/',true);
+  // xmlhttp.send(null);
+
+  function state_Change(){
+    if (xmlhttp.readyState == 4){// 4 = "loaded"
+      if (xmlhttp.status == 200){// 200 = "OK"
+        throw new Error('error')
+      }else{
+        console.log("Problem retrieving XML data:" + xmlhttp.statusText);
+      }
+    }
+  }
+
+
+
+</script>
+</html>

@@ -4475,6 +4475,7 @@
     var value;
     var vm = this.vm;
     try {
+      debugger;
       value = this.getter.call(vm, vm);
     } catch (e) {
       if (this.user) {
