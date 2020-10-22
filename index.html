@@ -28,6 +28,7 @@
     <div class="inner">inner</div>
   </div>
   <div id="app">
+    <button @click="changeLast">changeLast</button>
     <ul>
       <li
         v-for="(item, i) in obj.tableData"
@@ -39,6 +40,7 @@
       </li>
       <button @click="myDelete">删除</button>
     </ul>
+    <p @click="myDelete">{{ obj1.name }}</p>
   </div>
 </body>
 <!--<script src="./dist/vue.js"></script>-->
@@ -55,7 +57,8 @@
       // useless: 0,
       obj: {
         tableData: [],
-      }
+      },
+      obj1: {}
     },
     computed: {
       myKey() {
@@ -67,7 +70,9 @@
         // this.useless++;
       },
       changeLast() {
-        this.lastName = 'anqi';
+        this.obj1.name = 'Darren1';
+        this.$forceUpdate();
+        // this.lastName = 'anqi';
       },
       change1(item, i) {
         item.followers = [`fellows${i}`, `manager${i}`];
@@ -86,7 +91,8 @@
       }
     },
     mounted() {
-      this.obj.tableData = [
+
+      /*this.obj.tableData = [
         {
           id: 1,
           name: 'Beacon1',
@@ -102,17 +108,17 @@
           name: 'Beacon3',
           checked: true,
         },
-      ];
+      ];*/
       // this.lastName = 'Baron';
     },
     watch: {
-      lastName: {
+      /*lastName: {
         handler(newVal, oldVal) {
           // debugger;
           console.log(newVal, oldVal, 111);
         },
         immediate: true,
-      },
+      },*/
     }
   }).$mount('#app');
 </script>

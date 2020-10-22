@@ -4475,7 +4475,7 @@
     var value;
     var vm = this.vm;
     try {
-      debugger;
+      // debugger;
       value = this.getter.call(vm, vm);
     } catch (e) {
       if (this.user) {
@@ -6161,7 +6161,7 @@
     }
 
     function updateChildren (parentElm, oldCh, newCh, insertedVnodeQueue, removeOnly) {
-      debugger;
+      // debugger;
       var oldStartIdx = 0;
       var newStartIdx = 0;
       var oldEndIdx = oldCh.length - 1;
